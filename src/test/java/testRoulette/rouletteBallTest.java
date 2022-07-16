@@ -1,8 +1,7 @@
 package testRoulette;
 
 import com.github.zipcodewilmington.casino.PlayerInterface;
-import com.github.zipcodewilmington.casino.games.roulette.BallNumberGenerator;
-import com.github.zipcodewilmington.casino.games.roulette.BallNumberGenerator;
+import com.github.zipcodewilmington.roulette.BallNumberGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;

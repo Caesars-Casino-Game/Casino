@@ -8,7 +8,7 @@ public class RouletteBall{
     private String color;
     private boolean even;
 
-    RouletteBall(int number, String color, boolean even){
+    public RouletteBall(int number, String color, boolean even){
         this.number = number;
         this.color = color;
         this.even = even;
