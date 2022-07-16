@@ -1,2 +1,3 @@
 
 frank,bob,500
+bob,fit,5000

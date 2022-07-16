@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.games.slots.SlotsGame;
 import com.github.zipcodewilmington.casino.games.slots.SlotsPlayer;
@@ -20,16 +21,43 @@ public class SlotsGameTest {
     }
 
     @Test
-    public void SlotsGameTest() {
+    public void addPlayerTest() {
+        //Given
         SlotsGame test = new SlotsGame();
         CasinoAccount testAccount = new CasinoAccount("Fred", "Bob", 5000);
         SlotsPlayer player = new SlotsPlayer(testAccount);
+        //When
         test.add(player);
-        test.run();
+        //Then
+        Assert.assertEquals(test.gambler.get(0).getArcadeAccount().getBalance(), testAccount.getBalance());
     }
 
     @Test
-    public void pullLeverTest() {
+    public void slotsTest() {
+        //Given
+        SlotsGame test = new SlotsGame();
+        CasinoAccount testAccount = new CasinoAccount("Fred", "Bob", 1);
+        SlotsPlayer player = new SlotsPlayer(testAccount);
+        Random random = new Random(1);
+        int slot1, slot2, slot3;
+        int[] pulled = new int[3];
 
+        slot1 = random.nextInt(9) + 1;
+        pulled[0] = slot1;
+        slot2 = random.nextInt(9) + 1;
+        pulled[1] = slot2;
+        slot3 = random.nextInt(9) + 1;
+        pulled[2] = slot3;
+
+        String result = test.getResult(pulled);
+        if (result.equals("bingo")) test.win(player, 25);
+        if (result.equals("bango")) test.win(player, 10);
+        if (result.equals("bongo")) test.lose(player);
+        //When
+        int actual = player.getArcadeAccount().getBalance() - 1;
+        int expected = 9;
+        //Then
+        System.out.println(actual);
+        Assert.assertEquals(expected, actual);
     }
 }

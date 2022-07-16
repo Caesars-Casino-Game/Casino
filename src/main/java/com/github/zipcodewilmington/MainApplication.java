@@ -10,6 +10,7 @@ public class MainApplication {
     public static void main(String[] args) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         ballGenerator x = new ballGenerator();
 
        x.colorResult(6);
@@ -18,6 +19,9 @@ public class MainApplication {
         RouletteGame game = new RouletteGame();
         game.run();
 //        new Casino().run();
+=======
+        new Casino().run();
+>>>>>>> master
 
 
 
