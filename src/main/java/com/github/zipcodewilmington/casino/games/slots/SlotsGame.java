@@ -1,46 +1,70 @@
 package com.github.zipcodewilmington.casino.games.slots;
 
+import com.github.zipcodewilmington.Casino;
+import com.github.zipcodewilmington.casino.CasinoAccount;
+import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
 import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by leon on 7/21/2020.
  */
-public class SlotsGame implements GameInterface {
+public class SlotsGame extends CasinoAccountManager implements GameInterface {
+
     private final IOConsole console = new IOConsole(AnsiColor.BLUE);
-    public LinkedList<SlotsPlayer> slotPlayers = new LinkedList<>();
+    public List<PlayerInterface> gambler = new ArrayList<>();
+    public List<PlayerInterface> leaveGame = new ArrayList<>();
+
+    private Integer balance;
     @Override
     public void add(PlayerInterface player) {
-        slotPlayers.add((SlotsPlayer) player);
+
+        player.getArcadeAccount();
+        this.balance = player.getArcadeAccount().getBalance();
+        System.out.println("Your balance is " + this.balance);
+        gambler.add(player);
     }
 
     @Override
     public void remove(PlayerInterface player) {
-        slotPlayers.remove((SlotsPlayer) player);
+        gambler.get(0).getArcadeAccount().setBalance(this.balance);
+       Casino c = new Casino(player);
+       c.run();
     }
 
     @Override
     public void run() {
-        slots();
-        //do you want to play again?
+        boolean running = true;
+        while (running) {
+            int bet = this.setBet();
+            if (bet != 1) {
+                System.out.println("You can't play without inserting a dollar. Goodbye");
+                break;
+            } else {
+                this.slots(gambler.get(0));
+            }
+            String go = console.getStringInput("Would you like to continue playing?");
+            if (go.equals("no")) {
+                this.remove(gambler.get(0));
+                break;
+            }
 
+        }
     }
 
-    public void slots() {
-        for(PlayerInterface player : slotPlayers) {
-
-            if (this.setBet() == 1) continue;
-            else System.out.println("Get out of my casino");
-
-            String result = getResult(Lever.PullLever());
-            if (result == "bingo") win(player, 500);
-            if (result == "bango") win(player, 100);
-            if (result == "bongo") lose(player);
-        }
+    public void slots(PlayerInterface player) {
+        int[] lever = Lever.PullLever();
+        System.out.println(lever[0] + "  " + lever[1] + "  " + lever[2]);
+        String result = getResult(lever);
+        if (result.equals("bingo")) win(player, 25);
+        if (result.equals("bango")) win(player, 10);
+        if (result.equals("bongo")) lose(player, 1);
 
     }
 
@@ -57,12 +81,67 @@ public class SlotsGame implements GameInterface {
     }
 
     public void win(PlayerInterface player, int winnings) {
-//        somehow need to also make this method update the account balance of the current player
-//        remove(player);   dont do this
+        int balance = player.getArcadeAccount().getBalance();
+        balance = balance + winnings;
+        player.getArcadeAccount().setBalance(balance);
+        System.out.println("Your new balance is " + player.getArcadeAccount().getBalance());
     }
 
-    public void lose(PlayerInterface player) {
-//        somehow need to also make this method update the account balance of the current player
-//        remove(player);  dont do this
+    public void lose(PlayerInterface player, int loss) {
+        int balance = player.getArcadeAccount().getBalance();
+        balance = balance - loss;
+        player.getArcadeAccount().setBalance(balance);
+        System.out.println("Your new balance is " + player.getArcadeAccount().getBalance());
+    }
+
+
+    @Override
+    public void bet() {
+
+    }
+
+    @Override
+    public void continueGambling() {
+
+    }
+
+    @Override
+    public void lose() {
+
+    }
+
+    @Override
+    public void outcome() {
+
+    }
+
+    @Override
+    public void bonus() {
+
+    }
+
+    @Override
+    public void enterGame() {
+
+    }
+
+    @Override
+    public void kickout() {
+
+    }
+
+    @Override
+    public void account() {
+
+    }
+
+    @Override
+    public void moneyCheck() {
+
+    }
+
+    @Override
+    public void music() {
+
     }
 }

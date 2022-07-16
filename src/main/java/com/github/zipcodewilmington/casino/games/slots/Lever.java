@@ -10,17 +10,15 @@ abstract class Lever {
 
         System.out.println("Pulling lever now\n" +
                 "...\n" +
-                "...\n" +
                 "...\n");
 
-        slot1 = random.nextInt(5) + 1;
+        slot1 = random.nextInt(9) + 1;
         pulled[0] = slot1;
-        slot2 = random.nextInt(5) + 1;
+        slot2 = random.nextInt(9) + 1;
         pulled[1] = slot2;
-        slot3 = random.nextInt(5) + 1;
+        slot3 = random.nextInt(9) + 1;
         pulled[2] = slot3;
 
-        System.out.println(slot1 + "  " + slot2 + "  " + slot3);
         return pulled;
     }
 }

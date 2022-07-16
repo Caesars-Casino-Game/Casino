@@ -1,29 +1,23 @@
-package com.github.zipcodewilmington.casino.games.roulette;
+package com.github.zipcodewilmington.casino.games.war;
 
 import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.PlayerInterface;
 
-import java.util.ArrayList;
-import java.util.List;
+public class WarGamePlayer extends CasinoAccountManager implements PlayerInterface {
 
-public class RoulettePlayer extends CasinoAccountManager implements PlayerInterface {
-    List<CasinoAccount> holdPlayer = new ArrayList<>();
     Object casinoAccount;
 
     Integer balance;
 
-    public RoulettePlayer(CasinoAccount casinoAccount) {
+    public WarGamePlayer (CasinoAccount casinoAccount) {
         this.casinoAccount = casinoAccount;
         this.balance = casinoAccount.getBalance();
 
     }
 
-
-
     @Override
     public CasinoAccount getArcadeAccount() {
-
         return (CasinoAccount) this.casinoAccount;
     }
 
@@ -39,7 +33,6 @@ public class RoulettePlayer extends CasinoAccountManager implements PlayerInterf
 
     @Override
     public void CasinoAccount() {
-        this.getArcadeAccount();
 
     }
 
